@@ -8,6 +8,9 @@
 UBTDecorator_FloatConditionCheck::UBTDecorator_FloatConditionCheck()
 {
 	NodeName = TEXT("Float Conditional Check");
+
+	// Accept only floats
+	BlackboardKey.AddFloatFilter(this, GET_MEMBER_NAME_CHECKED(UBTDecorator_FloatConditionCheck, BlackboardKey));
 }
 
 bool UBTDecorator_FloatConditionCheck::CalculateRawConditionValue(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) const
