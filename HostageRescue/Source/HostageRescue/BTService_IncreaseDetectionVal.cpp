@@ -34,5 +34,5 @@ void UBTService_IncreaseDetectionVal::TickNode(UBehaviorTreeComponent& OwnerComp
 
 FString UBTService_IncreaseDetectionVal::GetStaticDescription() const
 {
-	return FString::Printf(TEXT("Update the selected Blackboard Key to represent target detection"));
+	return FString::Printf(TEXT("Update the selected Blackboard Key to represent target detection ammount"));
 }

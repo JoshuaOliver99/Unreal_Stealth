@@ -9,5 +9,8 @@ public class HostageRescue : ModuleRules
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "GameplayTasks", "HeadMountedDisplay", "EnhancedInput" });
+		
+		PrivateDependencyModuleNames.AddRange(new string[] { "AIModule", "NavigationSystem" });
+
 	}
 }
