@@ -4,6 +4,8 @@
 
 #include "Collectable.h"
 #include "HostageRescueCharacter.h"
+#include "HostageRescuePlayerController.h"
+#include "UserWidget_CollectablesHUD.h"
 #include "Components/BoxComponent.h"
 #include "Engine/TriggerBase.h"
 #include "Engine/TriggerBox.h"
@@ -38,6 +40,11 @@ void AHostageRescueGameMode::Initialize()
 			BoxComponent->OnComponentBeginOverlap.AddDynamic(this, &AHostageRescueGameMode::OnCollectableBeginOverlap);
 		}
 	}
+
+
+	// Initialize UI
+	// TODO: Make this happen a few frames later to ensure dependencies are setup
+	UpdateCollectablesUI();
 }
 
 void AHostageRescueGameMode::OnCollectableBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
@@ -59,9 +66,36 @@ void AHostageRescueGameMode::CheckWinCondition()
 	if (CollectablesCollectedNum == CollectablesNum)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Game Won!"));
+		// TODO: ShowWinScreen();
 	}
 	else
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Collectables Remaining: %i"), CollectablesNum - CollectablesCollectedNum);
+		UpdateCollectablesUI();
+	}
+}
+
+void AHostageRescueGameMode::UpdateCollectablesUI()
+{
+	// Update Collections UI...
+	// TODO: Sort this into a function / better place
+	if (GetWorld())
+	{
+		// Get the first player controller in the game world
+		AHostageRescuePlayerController* PlayerController = Cast<AHostageRescuePlayerController>(GetWorld()->GetFirstPlayerController());
+
+		if (PlayerController)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("PlayerController!"));
+
+			UUserWidget_CollectablesHUD* CollectablesHud = Cast<UUserWidget_CollectablesHUD>(PlayerController->GetHud());
+
+			if (CollectablesHud)
+			{
+				UE_LOG(LogTemp, Warning, TEXT("CollectablesHud!"));
+
+				CollectablesHud->UpdateCollectablesText(CollectablesCollectedNum, CollectablesNum);
+			}
+		}
 	}
 }

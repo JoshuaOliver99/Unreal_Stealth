@@ -43,6 +43,10 @@ public:
 
 	// TODO
 	//void CheckLoseCondition();
+
+// ----- UI
+
+	void UpdateCollectablesUI();
 };
 
 
