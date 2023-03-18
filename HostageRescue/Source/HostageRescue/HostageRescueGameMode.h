@@ -6,6 +6,8 @@
 #include "GameFramework/GameModeBase.h"
 #include "HostageRescueGameMode.generated.h"
 
+class UUW_CollectablesHUD;
+
 UCLASS(minimalapi)
 class AHostageRescueGameMode : public AGameModeBase
 {
@@ -14,19 +16,14 @@ class AHostageRescueGameMode : public AGameModeBase
 public:
 	AHostageRescueGameMode();
 	
-	
-	
-	// TODO: ----- Review
-	
-// ----- Initialization
-	
+private:	
 	virtual void BeginPlay() override;
 	
-	// Initializes the starting values
 	void Initialize();
 
+	
 // ----- Collectables
-
+private:
 	UPROPERTY(VisibleAnywhere)
 	int CollectablesNum;
 
@@ -37,16 +34,23 @@ public:
 	UFUNCTION()
 	void OnCollectableBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
 
-// ----- Win / Loss
 	
+// ----- Win / Loss
+private:
 	void CheckWinCondition();
 
 	// TODO
 	//void CheckLoseCondition();
 
+	
 // ----- UI
+private:
+	
+	void UpdateUI() const;
+	
+	void UpdateCollectablesUI() const;
 
-	void UpdateCollectablesUI();
+	UUW_CollectablesHUD* GetHUD() const;
 };
 
 

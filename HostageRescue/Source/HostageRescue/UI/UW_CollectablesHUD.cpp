@@ -13,7 +13,7 @@ void UUW_CollectablesHUD::NativeConstruct()
 	CollectablesText = Cast<UTextBlock>(GetWidgetFromName(TEXT("CollectablesText")));
 }
 
-void UUW_CollectablesHUD::UpdateTimeText(float NewTime)
+void UUW_CollectablesHUD::UpdateTimeText(const float NewTime)
 {
 	if (TimeText)
 	{
@@ -21,7 +21,7 @@ void UUW_CollectablesHUD::UpdateTimeText(float NewTime)
 	}
 }
 
-void UUW_CollectablesHUD::UpdateVisibilityText(float NewVisibility)
+void UUW_CollectablesHUD::UpdateVisibilityText(const float NewVisibility)
 {
 	if (VisibilityText)
 	{
@@ -29,10 +29,14 @@ void UUW_CollectablesHUD::UpdateVisibilityText(float NewVisibility)
 	}
 }
 
-void UUW_CollectablesHUD::UpdateCollectablesText(int NewCollectedNum, int TotalCollectables)
+void UUW_CollectablesHUD::UpdateCollectablesText(const int NewCollectedNum, const int TotalCollectables)
 {
+	UE_LOG(LogTemp, Warning, TEXT("UpdateCollectablesText"));
+
 	if (CollectablesText)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("CollectablesText"));
+
 		CollectablesText->SetText(FText::FromString(FString::Printf(TEXT("Collected: %i/%i"), NewCollectedNum, TotalCollectables)));
 	}
 }

@@ -38,11 +38,10 @@ void AHostageRescueGameMode::Initialize()
 			BoxComponent->OnComponentBeginOverlap.AddDynamic(this, &AHostageRescueGameMode::OnCollectableBeginOverlap);
 		}
 	}
-
-
+	
 	// Initialize UI
-	// TODO: Make this happen a few frames later to ensure dependencies are setup
-	UpdateCollectablesUI();
+	FTimerHandle InitializeUIDelayTimerHandle;
+	GetWorldTimerManager().SetTimer(InitializeUIDelayTimerHandle,this, &AHostageRescueGameMode::UpdateUI, 0.1f, false);
 }
 
 void AHostageRescueGameMode::OnCollectableBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
@@ -54,6 +53,8 @@ void AHostageRescueGameMode::OnCollectableBeginOverlap(UPrimitiveComponent* Over
 			CollectablesCollectedNum++;
 			OverlappedComponent->GetOwner()->Destroy();
 
+			
+			UpdateCollectablesUI();
 			CheckWinCondition();
 		}
 	}
@@ -63,37 +64,50 @@ void AHostageRescueGameMode::CheckWinCondition()
 {
 	if (CollectablesCollectedNum == CollectablesNum)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Game Won!"));
-		// TODO: ShowWinScreen();
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Collectables Remaining: %i"), CollectablesNum - CollectablesCollectedNum);
-		UpdateCollectablesUI();
+		if (GetWorld() == nullptr)
+		{
+			return;
+		}
+	
+		AHostageRescuePlayerController* PlayerController = Cast<AHostageRescuePlayerController>(GetWorld()->GetFirstPlayerController());
+		if (PlayerController == nullptr)
+		{
+			return;
+		}
+
+		PlayerController->GameHasEnded(PlayerController->GetPawn(), true);
 	}
 }
 
-void AHostageRescueGameMode::UpdateCollectablesUI()
+
+void AHostageRescueGameMode::UpdateUI() const
 {
-	// Update Collections UI...
-	// TODO: Sort this into a function / better place
-	if (GetWorld())
+	UpdateCollectablesUI();
+	// UpdateX
+	// UpdateY
+	// UpdateZ
+}
+
+void AHostageRescueGameMode::UpdateCollectablesUI() const
+{
+	if (UUW_CollectablesHUD* CollectablesHUD = GetHUD())
 	{
-		// Get the first player controller in the game world
-		AHostageRescuePlayerController* PlayerController = Cast<AHostageRescuePlayerController>(GetWorld()->GetFirstPlayerController());
-
-		if (PlayerController)
-		{
-			UE_LOG(LogTemp, Warning, TEXT("PlayerController!"));
-
-			UUW_CollectablesHUD* CollectablesHud = Cast<UUW_CollectablesHUD>(PlayerController->GetHud());
-
-			if (CollectablesHud)
-			{
-				UE_LOG(LogTemp, Warning, TEXT("CollectablesHud!"));
-
-				CollectablesHud->UpdateCollectablesText(CollectablesCollectedNum, CollectablesNum);
-			}
-		}
+		CollectablesHUD->UpdateCollectablesText(CollectablesCollectedNum, CollectablesNum);
 	}
+}
+
+UUW_CollectablesHUD* AHostageRescueGameMode::GetHUD() const
+{
+	if (GetWorld() == nullptr)
+	{
+		return nullptr;
+	}
+	
+	const AHostageRescuePlayerController* PlayerController = Cast<AHostageRescuePlayerController>(GetWorld()->GetFirstPlayerController());
+	if (PlayerController == nullptr)
+	{
+		return nullptr;
+	}
+	
+	return Cast<UUW_CollectablesHUD>(PlayerController->GetHud());
 }
