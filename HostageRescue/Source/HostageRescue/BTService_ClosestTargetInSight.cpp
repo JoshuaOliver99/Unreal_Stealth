@@ -12,8 +12,8 @@ UBTService_ClosestTargetInSight::UBTService_ClosestTargetInSight()
 {
 	NodeName = TEXT("Get Closest Target in Sight");
 
-	// Accept only vectors
-	BlackboardKey.AddVectorFilter(this, GET_MEMBER_NAME_CHECKED(UBTService_ClosestTargetInSight, BlackboardKey));
+	// Accept only Actors
+	BlackboardKey.AddObjectFilter(this, GET_MEMBER_NAME_CHECKED(UBTService_ClosestTargetInSight, BlackboardKey), AActor::StaticClass());
 }
 
 void UBTService_ClosestTargetInSight::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
