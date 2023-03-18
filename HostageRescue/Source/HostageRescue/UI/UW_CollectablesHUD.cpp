@@ -1,12 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "UserWidget_CollectablesHUD.h"
-
-#include "Components/RichTextBlock.h"
+#include "UW_CollectablesHUD.h"
 #include "Components/TextBlock.h"
 
-void UUserWidget_CollectablesHUD::NativeConstruct()
+void UUW_CollectablesHUD::NativeConstruct()
 {
 	Super::NativeConstruct();
 
@@ -15,7 +13,7 @@ void UUserWidget_CollectablesHUD::NativeConstruct()
 	CollectablesText = Cast<UTextBlock>(GetWidgetFromName(TEXT("CollectablesText")));
 }
 
-void UUserWidget_CollectablesHUD::UpdateTimeText(float NewTime)
+void UUW_CollectablesHUD::UpdateTimeText(float NewTime)
 {
 	if (TimeText)
 	{
@@ -23,7 +21,7 @@ void UUserWidget_CollectablesHUD::UpdateTimeText(float NewTime)
 	}
 }
 
-void UUserWidget_CollectablesHUD::UpdateVisibilityText(float NewVisibility)
+void UUW_CollectablesHUD::UpdateVisibilityText(float NewVisibility)
 {
 	if (VisibilityText)
 	{
@@ -31,7 +29,7 @@ void UUserWidget_CollectablesHUD::UpdateVisibilityText(float NewVisibility)
 	}
 }
 
-void UUserWidget_CollectablesHUD::UpdateCollectablesText(int NewCollectedNum, int TotalCollectables)
+void UUW_CollectablesHUD::UpdateCollectablesText(int NewCollectedNum, int TotalCollectables)
 {
 	if (CollectablesText)
 	{

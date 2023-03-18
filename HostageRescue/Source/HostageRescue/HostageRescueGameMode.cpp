@@ -2,14 +2,12 @@
 
 #include "HostageRescueGameMode.h"
 
-#include "Collectable.h"
 #include "HostageRescueCharacter.h"
 #include "HostageRescuePlayerController.h"
-#include "UserWidget_CollectablesHUD.h"
+#include "Collectables/Collectable.h"
 #include "Components/BoxComponent.h"
-#include "Engine/TriggerBase.h"
-#include "Engine/TriggerBox.h"
 #include "Kismet/GameplayStatics.h"
+#include "UI/UW_CollectablesHUD.h"
 #include "UObject/ConstructorHelpers.h"
 
 AHostageRescueGameMode::AHostageRescueGameMode() : Super()
@@ -88,7 +86,7 @@ void AHostageRescueGameMode::UpdateCollectablesUI()
 		{
 			UE_LOG(LogTemp, Warning, TEXT("PlayerController!"));
 
-			UUserWidget_CollectablesHUD* CollectablesHud = Cast<UUserWidget_CollectablesHUD>(PlayerController->GetHud());
+			UUW_CollectablesHUD* CollectablesHud = Cast<UUW_CollectablesHUD>(PlayerController->GetHud());
 
 			if (CollectablesHud)
 			{

@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "BehaviorTree/Decorators/BTDecorator_BlackboardBase.h"
-#include "BTDecorator_FloatConditionCheck.generated.h"
+#include "BTD_FloatConditionCheck.generated.h"
 
 UENUM(BlueprintType)
 enum class ComparisonTypes : uint8
@@ -18,12 +18,12 @@ enum class ComparisonTypes : uint8
  * 
  */
 UCLASS()
-class HOSTAGERESCUE_API UBTDecorator_FloatConditionCheck : public UBTDecorator_BlackboardBase
+class HOSTAGERESCUE_API UBTD_FloatConditionCheck : public UBTDecorator_BlackboardBase
 {
 	GENERATED_BODY()
 
 public:
-	UBTDecorator_FloatConditionCheck();
+	UBTD_FloatConditionCheck();
 	
 	UPROPERTY(EditAnywhere, Category = "Comparison")
 	ComparisonTypes ComparisonType;

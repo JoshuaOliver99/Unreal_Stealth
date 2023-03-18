@@ -1,21 +1,21 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "BTTask_FindRandomLocation.h"
+#include "BTT_FindRandomLocation.h"
 
 #include "AIController.h"
 #include "NavigationSystem.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
-UBTTask_FindRandomLocation::UBTTask_FindRandomLocation()
+UBTT_FindRandomLocation::UBTT_FindRandomLocation()
 {
 	NodeName = TEXT("Find Random Location");
 
 	// Accept only vectors
-	BlackboardKey.AddVectorFilter(this, GET_MEMBER_NAME_CHECKED(UBTTask_FindRandomLocation, BlackboardKey));
+	BlackboardKey.AddVectorFilter(this, GET_MEMBER_NAME_CHECKED(UBTT_FindRandomLocation, BlackboardKey));
 }
 
-EBTNodeResult::Type UBTTask_FindRandomLocation::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
+EBTNodeResult::Type UBTT_FindRandomLocation::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
 	FNavLocation Location{};
 
@@ -39,7 +39,7 @@ EBTNodeResult::Type UBTTask_FindRandomLocation::ExecuteTask(UBehaviorTreeCompone
 	return  EBTNodeResult::Succeeded;
 }
 
-FString UBTTask_FindRandomLocation::GetStaticDescription() const
+FString UBTT_FindRandomLocation::GetStaticDescription() const
 {
 	return FString::Printf(TEXT("Find Reachable Vector: %s"), *BlackboardKey.SelectedKeyName.ToString());
 }

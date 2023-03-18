@@ -1,19 +1,19 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "BTDecorator_FloatConditionCheck.h"
+#include "BTD_FloatConditionCheck.h"
 
 #include "BehaviorTree/BlackboardComponent.h"
 
-UBTDecorator_FloatConditionCheck::UBTDecorator_FloatConditionCheck()
+UBTD_FloatConditionCheck::UBTD_FloatConditionCheck()
 {
 	NodeName = TEXT("Float Conditional Check");
 
 	// Accept only floats
-	BlackboardKey.AddFloatFilter(this, GET_MEMBER_NAME_CHECKED(UBTDecorator_FloatConditionCheck, BlackboardKey));
+	BlackboardKey.AddFloatFilter(this, GET_MEMBER_NAME_CHECKED(UBTD_FloatConditionCheck, BlackboardKey));
 }
 
-bool UBTDecorator_FloatConditionCheck::CalculateRawConditionValue(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) const
+bool UBTD_FloatConditionCheck::CalculateRawConditionValue(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) const
 {
 	const float SelectedKeyValue  = OwnerComp.GetBlackboardComponent()->GetValueAsFloat(GetSelectedBlackboardKey());
 	
@@ -39,7 +39,7 @@ bool UBTDecorator_FloatConditionCheck::CalculateRawConditionValue(UBehaviorTreeC
 	return false;
 }
 
-FString UBTDecorator_FloatConditionCheck::GetStaticDescription() const
+FString UBTD_FloatConditionCheck::GetStaticDescription() const
 {
 	return FString::Printf(TEXT("Compare the selected Blackboard float against ValueToCompareTo"));
 }

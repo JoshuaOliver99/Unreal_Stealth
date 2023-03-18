@@ -1,16 +1,16 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "BTService_IncreaseDetectionVal.h"
+#include "BTS_IncreaseDetectionVal.h"
 
 #include "BehaviorTree/BlackboardComponent.h"
 
-UBTService_IncreaseDetectionVal::UBTService_IncreaseDetectionVal()
+UBTS_IncreaseDetectionVal::UBTS_IncreaseDetectionVal()
 {
 	NodeName = TEXT("Increase the detection of the target");
 }
 
-void UBTService_IncreaseDetectionVal::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
+void UBTS_IncreaseDetectionVal::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
 {
 	Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);
 
@@ -32,7 +32,7 @@ void UBTService_IncreaseDetectionVal::TickNode(UBehaviorTreeComponent& OwnerComp
 	OwnerComp.GetBlackboardComponent()->SetValueAsFloat(GetSelectedBlackboardKey(), currentDetection);
 }
 
-FString UBTService_IncreaseDetectionVal::GetStaticDescription() const
+FString UBTS_IncreaseDetectionVal::GetStaticDescription() const
 {
 	return FString::Printf(TEXT("Update the selected Blackboard Key to represent target detection ammount"));
 }

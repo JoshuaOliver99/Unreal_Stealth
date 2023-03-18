@@ -4,18 +4,18 @@
 
 #include "CoreMinimal.h"
 #include "BehaviorTree/Services/BTService_BlackboardBase.h"
-#include "BTService_IncreaseDetectionVal.generated.h"
+#include "BTS_IncreaseDetectionVal.generated.h"
 
 /**
  * The selected BlackboardKey is intended to be a detection value float
  */
 UCLASS()
-class HOSTAGERESCUE_API UBTService_IncreaseDetectionVal : public UBTService_BlackboardBase
+class HOSTAGERESCUE_API UBTS_IncreaseDetectionVal : public UBTService_BlackboardBase
 {
 	GENERATED_BODY()
 	
 public:
-	UBTService_IncreaseDetectionVal();
+	UBTS_IncreaseDetectionVal();
 	
 	UPROPERTY(EditAnywhere, Category=Blackboard, meta = (BaseClass = "AActor"))
 	struct FBlackboardKeySelector ActorToDetectBlackboardKey;

@@ -1,22 +1,22 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "BTService_ClosestTargetInSight.h"
+#include "BTS_ClosestPerceivedTarget.h"
 
 #include "AIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Perception/AIPerceptionComponent.h"
 #include "Perception/AISense_Sight.h"
 
-UBTService_ClosestTargetInSight::UBTService_ClosestTargetInSight()
+UBTS_ClosestPerceivedTarget::UBTS_ClosestPerceivedTarget()
 {
-	NodeName = TEXT("Get Closest Target in Sight");
+	NodeName = TEXT("Get Closest Percieved Target");
 
 	// Accept only Actors
-	BlackboardKey.AddObjectFilter(this, GET_MEMBER_NAME_CHECKED(UBTService_ClosestTargetInSight, BlackboardKey), AActor::StaticClass());
+	BlackboardKey.AddObjectFilter(this, GET_MEMBER_NAME_CHECKED(UBTS_ClosestPerceivedTarget, BlackboardKey), AActor::StaticClass());
 }
 
-void UBTService_ClosestTargetInSight::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
+void UBTS_ClosestPerceivedTarget::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
 {
 	Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);
 
@@ -58,7 +58,7 @@ void UBTService_ClosestTargetInSight::TickNode(UBehaviorTreeComponent& OwnerComp
 	OwnerComp.GetBlackboardComponent()->SetValueAsObject(GetSelectedBlackboardKey(), ClosestActor);
 }
 
-FString UBTService_ClosestTargetInSight::GetStaticDescription() const
+FString UBTS_ClosestPerceivedTarget::GetStaticDescription() const
 {
 	return FString::Printf(TEXT("Sets the Blackboard Key to the closest Actor in sight"));
 }

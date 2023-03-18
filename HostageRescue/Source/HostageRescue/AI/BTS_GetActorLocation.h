@@ -4,18 +4,18 @@
 
 #include "CoreMinimal.h"
 #include "BehaviorTree/Services/BTService_BlackboardBase.h"
-#include "BTService_GetActorLocation.generated.h"
+#include "BTS_GetActorLocation.generated.h"
 
 /**
  * NOTE: ActorBlackboardKey must be of type Actor
  */
 UCLASS()
-class HOSTAGERESCUE_API UBTService_GetActorLocation : public UBTService_BlackboardBase
+class HOSTAGERESCUE_API UBTS_GetActorLocation : public UBTService_BlackboardBase
 {
 	GENERATED_BODY()
 
 public:
-	UBTService_GetActorLocation();
+	UBTS_GetActorLocation();
 
 	UPROPERTY(EditAnywhere, Category=Blackboard, meta = (BaseClass = "AActor"))
 	struct FBlackboardKeySelector ActorBlackboardKey;

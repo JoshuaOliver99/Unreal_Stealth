@@ -4,13 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-#include "UserWidget_CollectablesHUD.generated.h"
+#include "UW_CollectablesHUD.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class HOSTAGERESCUE_API UUserWidget_CollectablesHUD : public UUserWidget
+class HOSTAGERESCUE_API UUW_CollectablesHUD : public UUserWidget
 {
 	GENERATED_BODY()
 
