@@ -34,6 +34,14 @@ private:
 	UFUNCTION()
 	void OnCollectableBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
 
+
+	
+// ----- Enemies
+private:
+	UFUNCTION()
+	void OnEnemyBeginOverlapPlayer(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult);
+
+
 	
 // ----- Win / Loss
 private:
@@ -55,3 +63,4 @@ private:
 
 
 
+// TODO: Replace GetPlayerController calls, just store reference, its used all over

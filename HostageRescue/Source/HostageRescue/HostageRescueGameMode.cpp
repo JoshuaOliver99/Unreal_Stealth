@@ -2,10 +2,11 @@
 
 #include "HostageRescueGameMode.h"
 
-#include "HostageRescueCharacter.h"
 #include "HostageRescuePlayerController.h"
+#include "Characters/CharacterEnemy.h"
 #include "Collectables/Collectable.h"
 #include "Components/BoxComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "UI/UW_CollectablesHUD.h"
 #include "UObject/ConstructorHelpers.h"
@@ -25,11 +26,10 @@ void AHostageRescueGameMode::BeginPlay()
 
 void AHostageRescueGameMode::Initialize()
 {
-	// Find all appropriate collection triggers
+	// ----- Setup Collectables
 	TArray<AActor*> Collectables;
 	UGameplayStatics::GetAllActorsOfClass(this, ACollectable::StaticClass(), Collectables);
 
-	// Add delegate to the collectables
 	for (int i = 0; i < Collectables.Num(); ++i)
 	{
 		if (UBoxComponent* BoxComponent  = Cast<UBoxComponent>(Collectables[i]->GetComponentByClass(UBoxComponent::StaticClass())))
@@ -38,8 +38,26 @@ void AHostageRescueGameMode::Initialize()
 			BoxComponent->OnComponentBeginOverlap.AddDynamic(this, &AHostageRescueGameMode::OnCollectableBeginOverlap);
 		}
 	}
+
+
+	// ----- Setup Enemies
+	TArray<AActor*> Enemy;
+	UGameplayStatics::GetAllActorsOfClass(this, ACharacterEnemy::StaticClass(), Enemy);
+
+	for (int i = 0; i < Enemy.Num(); ++i)
+	{
+		if (ACharacterEnemy* EnemyCharacter = Cast<ACharacterEnemy>(Enemy[i]))
+		{
+			if (EnemyCharacter->GetCharacterInteractCapsule())
+			{
+				EnemyCharacter->GetCharacterInteractCapsule()->OnComponentBeginOverlap.AddDynamic(this, &AHostageRescueGameMode::OnEnemyBeginOverlapPlayer);
+			}
+		}
+	}
+
 	
-	// Initialize UI
+	
+	// ----- Initialize UI
 	FTimerHandle InitializeUIDelayTimerHandle;
 	GetWorldTimerManager().SetTimer(InitializeUIDelayTimerHandle,this, &AHostageRescueGameMode::UpdateUI, 0.1f, false);
 }
@@ -54,11 +72,28 @@ void AHostageRescueGameMode::OnCollectableBeginOverlap(UPrimitiveComponent* Over
 			OverlappedComponent->GetOwner()->Destroy();
 
 			
+			
 			UpdateCollectablesUI();
 			CheckWinCondition();
 		}
 	}
 }
+
+
+void AHostageRescueGameMode::OnEnemyBeginOverlapPlayer(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	AHostageRescuePlayerController* PlayerController = Cast<AHostageRescuePlayerController>(GetWorld()->GetFirstPlayerController());
+	if (PlayerController == nullptr)
+	{
+		return;
+	}
+	
+	if (OtherActor == PlayerController->GetPawn())
+	{
+		PlayerController->GameHasEnded(PlayerController->GetPawn(), false);
+	}
+}
+
 
 void AHostageRescueGameMode::CheckWinCondition()
 {

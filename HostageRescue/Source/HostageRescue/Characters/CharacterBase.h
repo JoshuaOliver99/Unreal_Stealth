@@ -26,4 +26,16 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+
+
+
+
+private:
+	// Collider trigger for prototyping character abilities (e.g. killing player)
+	UPROPERTY(EditAnywhere, Category = "Components")
+	UCapsuleComponent* CharacterInteractCapsule;
+
+public:
+	// Returns CharacterInteractCapsule subobject
+	UCapsuleComponent* GetCharacterInteractCapsule() const { return CharacterInteractCapsule; }
 };
